@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #image-upload {
+            display: none;
+        }
+
+        #upload-button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #upload-button:hover {
+            background-color: #2980b9;
+        }
+
+        #message {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Đăng ký</h1>
+    <label for="image-upload" id="upload-label">Chọn ảnh</label>
+    <input type="file" id="image-upload" accept="image/*">
+    <button id="upload-button">Upload</button>
+    <p id="message"></p>
+    <a href="/camera">Chuyển đến trang điểm danh</a>
+    <script>
+        document.getElementById('upload-button').addEventListener('click', function () {
+            var input = document.getElementById('image-upload');
+            var file = input.files[0];
+            var formData = new FormData();
+            formData.append('image', file);
+
+            fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('message').innerHTML = data.message;
+                });
+        });
+    </script>
+</body>
+
+</html>
