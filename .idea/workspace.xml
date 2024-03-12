@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b733ccef-db23-4c14-b2c0-a2299be8a4a6" name="Changes" comment="" />
+    <list default="true" id="b733ccef-db23-4c14-b2c0-a2299be8a4a6" name="Changes" comment="">
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/.idea/workspace.xml" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/controllers/user_controller.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/controllers/user_controller.py" afterDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/model/user.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/model/user.py" afterDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/imagehuanluyen/Screenshot 2024-03-09 144924.png" beforeDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/imagehuanluyen/Screenshot 2024-03-09 150019.png" beforeDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/images/Screenshot 2024-03-09 144924.png" beforeDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/images/Screenshot 2024-03-09 150019.png" beforeDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/camera.html" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/camera.html" afterDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/uploadanh.html" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/uploadanh.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +26,9 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$APPLICATION_HOME_DIR$/jbr/bin/web_flask" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -29,6 +42,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "D:/PyCharm Community Edition 2023.2.3/jbr/bin/web_flask"
   }
 }]]></component>

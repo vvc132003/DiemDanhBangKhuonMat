@@ -62,9 +62,9 @@ def upload():
         output_path = os.path.join(img_nhandien, new_filename)
         cv2.imwrite(output_path, img)
         # Lấy thông tin từ file ảnh và lưu vào CSDL
-        hovaten = "Chính"
+        full_name = request.form.get('fullName')
         # Lưu thông tin vào CSDL
-        new_user = Users(hovaten=hovaten, anhdaidien=output_path)
+        new_user = Users(userName=full_name, image=output_path)
         db.session.add(new_user)
         db.session.commit()
         # Trả về đường dẫn ảnh đã nhận diện khuôn mặt dưới dạng JSON
@@ -98,35 +98,27 @@ def attendance():
     try:
         # Nhận file ảnh từ yêu cầu POST
         file = request.files['image']
-
         # Nhận diện khuôn mặt trong ảnh
         unknown_image = face_recognition.load_image_file(file)
         unknown_face_encoding = face_recognition.face_encodings(unknown_image)
-
         if not unknown_face_encoding:
             # Nếu không tìm thấy khuôn mặt
             return jsonify({'message': 'No face detected in the image.'})
-
         # Query the database using the ORM
         registered_users = Users.query.all()
-
         # So sánh với danh sách người dùng đã đăng ký
         for user in registered_users:
             user_id = user.id
             user_name = user.hovaten
             anhdaidien_value = user.anhdaidien
-
             # Tải ảnh đại diện và lấy mã hóa khuôn mặt từ ảnh
             known_image = face_recognition.load_image_file(anhdaidien_value)
             known_face_encoding = face_recognition.face_encodings(known_image)
-
             if not known_face_encoding:
                 # Nếu không tìm thấy khuôn mặt trong ảnh của người dùng đã đăng ký
                 return jsonify({'message': 'No face detected in the registered user image.'})
-
             # So sánh các khuôn mặt
             results = face_recognition.compare_faces(known_face_encoding, unknown_face_encoding[0])
-
             if any(results):
                 # Nếu có ít nhất một sự khớp, ghi lại sự kiện điểm danh
                 print(f"ID: {user_id}, Họ và tên: {user_name}, Đường dẫn ảnh: {anhdaidien_value}")
@@ -141,10 +133,8 @@ def attendance():
                     'user_name': attendance_record.user_name,
                     'timestamp': attendance_record.timestamp
                 }})
-
         # Nếu không có sự khớp với người dùng nào
         return jsonify({'message': 'Face not recognized or not registered.'})
-
     except Exception as e:
         # Trả về thông điệp lỗi dưới dạng JSON nếu có lỗi xảy ra
         return jsonify({'message': f'Error: {str(e)}'})
