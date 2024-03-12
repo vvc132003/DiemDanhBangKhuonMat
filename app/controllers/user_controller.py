@@ -6,10 +6,9 @@ from flask import Flask, render_template, request, jsonify
 import cv2
 import os
 import face_recognition
-from datetime import datetime
-import mysql.connector
 import pyttsx3
 import numpy as np
+from datetime import datetime, date, time
 
 user_bp = Blueprint('user', __name__)
 
@@ -87,7 +86,7 @@ def attendance_page():
 
     # Convert the results to a list of dictionaries
     attendance_data = [
-        {'id': record.id, 'name': record.user_name, 'time': record.timestamp}
+        {'id': record.id, 'name': record.user_id, 'time': record.checkInTime}
         for record in attendance_records
     ]
     return jsonify(attendance_data)
@@ -103,38 +102,68 @@ def attendance():
         unknown_face_encoding = face_recognition.face_encodings(unknown_image)
         if not unknown_face_encoding:
             # Nếu không tìm thấy khuôn mặt
-            return jsonify({'message': 'No face detected in the image.'})
-        # Query the database using the ORM
+            return jsonify({'message': 'Không phát hiện khuôn mặt.'})
+        # orm user , lấy dữ liệu
         registered_users = Users.query.all()
         # So sánh với danh sách người dùng đã đăng ký
         for user in registered_users:
             user_id = user.id
-            user_name = user.hovaten
-            anhdaidien_value = user.anhdaidien
+            user_name = user.userName
+            anhdaidien_value = user.image
             # Tải ảnh đại diện và lấy mã hóa khuôn mặt từ ảnh
             known_image = face_recognition.load_image_file(anhdaidien_value)
             known_face_encoding = face_recognition.face_encodings(known_image)
             if not known_face_encoding:
                 # Nếu không tìm thấy khuôn mặt trong ảnh của người dùng đã đăng ký
-                return jsonify({'message': 'No face detected in the registered user image.'})
+                return jsonify({'message': 'Không tinmf thấy khuôn mặt.'})
+            # Lấy ngày hôm nay
+            today = date.today()
             # So sánh các khuôn mặt
             results = face_recognition.compare_faces(known_face_encoding, unknown_face_encoding[0])
             if any(results):
                 # Nếu có ít nhất một sự khớp, ghi lại sự kiện điểm danh
                 print(f"ID: {user_id}, Họ và tên: {user_name}, Đường dẫn ảnh: {anhdaidien_value}")
-                attendance_record = AttendanceRecords(
-                    user_name=user_name,
-                    timestamp=datetime.now()
-                )
-                # Lưu thông tin điểm danh vào CSDL sử dụng ORM
-                db.session.add(attendance_record)
-                db.session.commit()
-                return jsonify({'message': 'Attendance recorded successfully.', 'attendance_record': {
-                    'user_name': attendance_record.user_name,
-                    'timestamp': attendance_record.timestamp
-                }})
+                # Kiểm tra xem người dùng đã điểm danh hôm nay chưa
+                attendance_record = AttendanceRecords.query.filter(
+                    AttendanceRecords.user_id == user_id,
+                    AttendanceRecords.checkInTime >= today
+                ).first()
+                if attendance_record:
+                    # Kiểm tra xem đã check-out chưa
+                    if attendance_record.check_in_out_type == 'check_out':
+                        return jsonify({'message': 'Người dùng đã điểm danh check-out hôm nay.'})
+                    else:
+                        # 17:00 check_out
+                        now = datetime.now().time()
+                        checkout_time = time(17, 0)  # 17:00
+                        if now > checkout_time:
+                            # Nếu chưa check-out, thực hiện check-out
+                            attendance_record.check_in_out_type = 'check_out'
+                            attendance_record.checkInTime = datetime.now()
+                            # Lưu thông tin điểm danh vào CSDL sử dụng ORM
+                            db.session.commit()
+                            return jsonify({'message': 'Check-out thành công.', 'attendance_record': {
+                                'user_id': attendance_record.user_id,
+                                'checkInTime': attendance_record.checkInTime,
+                                'check_in_out_type': attendance_record.check_in_out_type
+                            }})
+                        else:
+                            return jsonify({'message': 'Chưa đến giờ check-out.'})
+                else:
+                    # Nếu chưa điểm danh, thực hiện điểm danh check-in
+                    new_attendance_checkin = AttendanceRecords(user_id=user_id, checkInTime=datetime.now(),
+                                                               check_in_out_type='check_in')
+                    # Lưu thông tin điểm danh vào CSDL sử dụng ORM
+                    db.session.add(new_attendance_checkin)
+                    db.session.commit()
+                    return jsonify({'message': 'Check-in thành công.', 'attendance_record': {
+                        'user_id': new_attendance_checkin.user_id,
+                        'checkInTime': new_attendance_checkin.checkInTime,
+                        'check_in_out_type': new_attendance_checkin.check_in_out_type
+                    }})
+
         # Nếu không có sự khớp với người dùng nào
-        return jsonify({'message': 'Face not recognized or not registered.'})
+        return jsonify({'message': 'Không có ảnh nào .'})
     except Exception as e:
         # Trả về thông điệp lỗi dưới dạng JSON nếu có lỗi xảy ra
         return jsonify({'message': f'Error: {str(e)}'})
