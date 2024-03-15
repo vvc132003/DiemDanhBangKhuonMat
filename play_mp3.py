@@ -23,5 +23,5 @@ def play_mp3(mp3_file):
 
 
 # Gọi hàm để phát tệp âm thanh .mp3
-mp3_file = "video/ghiam.mp3"  # Thay đổi đường dẫn tới tệp .mp3 của bạn
+mp3_file = "video/khongphathienkhuonmatnao.mp3"  # Thay đổi đường dẫn tới tệp .mp3 của bạn
 play_mp3(mp3_file)

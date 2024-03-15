@@ -1,22 +1,23 @@
 # /app/controllers/user_controller.py
 
-from flask import Blueprint, render_template
+from flask import Blueprint
 from app.model.user import Users, AttendanceRecords, db
-from flask import Flask, render_template, request, jsonify
+from flask import render_template, request, jsonify
 import cv2
 import os
 import face_recognition
 import pyttsx3
-import numpy as np
 from datetime import datetime, date, time
 import pygame
 
-user_bp = Blueprint('user', __name__)
+app = Blueprint('user', __name__)
+# Lưu file thuật toán Haar Cascade Frontal Face để dễ tham khảo
+alg = "haarcascade_frontalface_default.xml"
+# Sử dụng lớp CascadeClassifier để tải một file XML vào OpenCV:
+face_cascade = cv2.CascadeClassifier(alg)
 
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-
-@user_bp.route('/')
+@app.route('/')
 def uploadanh():
     return render_template("uploadanh.html")
 
@@ -48,7 +49,7 @@ def play_mp3(mp3_file):
         pygame.quit()
 
 
-@user_bp.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload():
     try:
         # Nhận file ảnh từ yêu cầu POST
@@ -65,8 +66,8 @@ def upload():
         # Áp dụng bộ lọc Haar để nhận diện khuôn mặt
         faces = face_cascade.detectMultiScale(gray_img, scaleFactor=1.1, minNeighbors=5)
         if len(faces) == 0:
-            # Đường d đến ghiam.mp3
-            mp3_file = "video/ghiam.mp3"
+            # Đường d đến khongphathienkhuonmatnao.mp3
+            mp3_file = "video/khongphathienkhuonmatnao.mp3"
             # Trả về bản ghi âm
             return jsonify(play_mp3(mp3_file))
         # Vẽ hình chữ nhật xung quanh các khuôn mặt nhận diện được
@@ -92,12 +93,12 @@ def upload():
         return jsonify({'message': f'Error: {str(e)}'})
 
 
-@user_bp.route('/camera')
+@app.route('/camera')
 def camera():
     return render_template("camera.html")
 
 
-@user_bp.route('/attendance_page')
+@app.route('/attendance_page')
 def attendance_page():
     # ORM
     attendance_records = AttendanceRecords.query.all()
@@ -109,7 +110,7 @@ def attendance_page():
     return jsonify(attendance_data)
 
 
-@user_bp.route('/attendance', methods=['POST'])
+@app.route('/attendance', methods=['POST'])
 def attendance():
     try:
         # Nhận file ảnh từ yêu cầu POST
@@ -124,8 +125,8 @@ def attendance():
         unknown_face_encoding = face_recognition.face_encodings(rgb_image, face_locations)
         if not unknown_face_encoding:
             # Nếu không tìm thấy khuôn mặt nào thì al trả lười bằng gionhj nói
-            # Đường d đến ghiam.mp3
-            mp3_file = "video/ghiam.mp3"
+            # Đường d đến khongphathienkhuonmatnao.mp3
+            mp3_file = "video/khongphathienkhuonmatnao.mp3"
             # Trả về bản ghi âm
             return jsonify(play_mp3(mp3_file))
         # orm user , lấy dữ liệu
@@ -134,20 +135,23 @@ def attendance():
         for user in registered_users:
             user_id = user.id
             user_name = user.userName
-            anhdaidien_value = user.image
+            images = user.image
             # Tải ảnh đại diện và lấy mã hóa khuôn mặt từ ảnh
-            known_image = face_recognition.load_image_file(anhdaidien_value)
+            known_image = face_recognition.load_image_file(images)
             known_face_encoding = face_recognition.face_encodings(known_image)
             if not known_face_encoding:
                 # Nếu không tìm thấy khuôn mặt trong ảnh của người dùng đã đăng ký
-                return jsonify({'message': 'Không tinmf thấy khuôn mặt.'})
+                # Đường d đến khuonmatkhongduocdangky.mp3
+                mp3_file = "video/khuonmatkhongduocdangky.mp3"
+                # Trả về bản ghi âm
+                return jsonify(play_mp3(mp3_file))
             # Lấy ngày hôm nay
             today = date.today()
             # So sánh các khuôn mặt
             results = face_recognition.compare_faces(known_face_encoding, unknown_face_encoding[0])
             if any(results):
                 # Nếu có ít nhất một sự khớp, ghi lại sự kiện điểm danh
-                print(f"ID: {user_id}, Họ và tên: {user_name}, Đường dẫn ảnh: {anhdaidien_value}")
+                print(f"ID: {user_id}, Họ và tên: {user_name}, Đường dẫn ảnh: {images}")
                 # Kiểm tra xem người dùng đã điểm danh hôm nay chưa
                 attendance_record = AttendanceRecords.query.filter(
                     AttendanceRecords.user_id == user_id,
@@ -166,7 +170,7 @@ def attendance():
                             attendance_record.check_in_out_type = 'check_out'
                             attendance_record.checkInTime = datetime.now()
                             # Lưu thông tin điểm danh vào CSDL sử dụng ORM
-                            db.session.commit()
+                            db.session.commit() 
                             return jsonify({'message': 'Check-out thành công.', 'attendance_record': {
                                 'user_id': attendance_record.user_id,
                                 'checkInTime': attendance_record.checkInTime,
