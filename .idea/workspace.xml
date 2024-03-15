@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b733ccef-db23-4c14-b2c0-a2299be8a4a6" name="Changes" comment="">
-      <change afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/th.py" afterDir="false" />
+      <change afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/play_mp3.py" afterDir="false" />
+      <change afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/video/ghiam.mp3" afterDir="false" />
       <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/.idea/workspace.xml" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app.py" afterDir="false" />
       <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/controllers/user_controller.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/controllers/user_controller.py" afterDir="false" />
       <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/model/user.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/model/user.py" afterDir="false" />
-      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/attendance.html" beforeDir="false" />
-      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/indexxxx.html" beforeDir="false" />
-      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/luuanhvaofileimage.html" beforeDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/camera.html" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/camera.html" afterDir="false" />
+      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/uploadanh.html" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/templates/uploadanh.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,27 +37,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/PyCharm Community Edition 2023.2.3/jbr/bin/web_flask"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/PyCharm Community Edition 2023.2.3/jbr/bin/web_flask&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask" />
       <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\video" />
+      <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\models" />
       <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\app" />
       <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\templates" />
       <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask" />
-      <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\app\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python.play_mp3">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="web_flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -91,6 +93,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="play_mp3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="web_flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_HOME_DIR$/jbr/bin/web_flask" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/play_mp3.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -143,6 +166,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.play_mp3" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.user_controller" />
         <item itemvalue="Python.th" />

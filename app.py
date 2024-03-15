@@ -11,7 +11,7 @@ db_password = 'chinh@2003'
 db_host = 'localhost'
 db_name = 'diemdanhkhuonmat'
 
-# Sử dụng pymysql thay vì mysqlconnector
+# Sử dụng pymysql
 encoded_password = quote_plus(db_password)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{encoded_password}@{db_host}/{db_name}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

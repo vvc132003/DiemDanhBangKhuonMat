@@ -9,6 +9,7 @@ import face_recognition
 import pyttsx3
 import numpy as np
 from datetime import datetime, date, time
+import pygame
 
 user_bp = Blueprint('user', __name__)
 
@@ -23,12 +24,28 @@ def uploadanh():
 def doc_van_ban(van_ban):
     # Khởi tạo đối tượng engine
     engine = pyttsx3.init()
-
     # Sử dụng hàm say để đọc văn bản
     engine.say(van_ban)
-
     # Chạy và đợi đến khi kết thúc đọc văn bản
     engine.runAndWait()
+
+
+def play_mp3(mp3_file):
+    # Khởi tạo pygame
+    pygame.init()
+    try:
+        # Load file mp3
+        pygame.mixer.music.load(mp3_file)
+        # Phát âm thanh
+        pygame.mixer.music.play()
+        # Đợi cho đến khi âm thanh phát xong
+        while pygame.mixer.music.get_busy():
+            pygame.time.Clock().tick(10)  # kiểm tra mỗi 10 milliseconds
+    except Exception as e:
+        print("Có lỗi khi phát âm thanh:", e)
+    finally:
+        # Dừng pygame khi kết thúc
+        pygame.quit()
 
 
 @user_bp.route('/upload', methods=['POST'])
@@ -48,9 +65,10 @@ def upload():
         # Áp dụng bộ lọc Haar để nhận diện khuôn mặt
         faces = face_cascade.detectMultiScale(gray_img, scaleFactor=1.1, minNeighbors=5)
         if len(faces) == 0:
-            van_ban_can_doc = "Không phát hiện khuôn mặt nào"
-            # Gọi hàm để đọc văn bản
-            return jsonify(doc_van_ban(van_ban_can_doc))
+            # Đường d đến ghiam.mp3
+            mp3_file = "video/ghiam.mp3"
+            # Trả về bản ghi âm
+            return jsonify(play_mp3(mp3_file))
         # Vẽ hình chữ nhật xung quanh các khuôn mặt nhận diện được
         for (x, y, w, h) in faces:
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -81,12 +99,11 @@ def camera():
 
 @user_bp.route('/attendance_page')
 def attendance_page():
-    # Query the database using the ORM
+    # ORM
     attendance_records = AttendanceRecords.query.all()
-
     # Convert the results to a list of dictionaries
     attendance_data = [
-        {'id': record.id, 'name': record.user_id, 'time': record.checkInTime}
+        {'id': record.id, 'name': record.user.userName, 'time': record.checkInTime, 'check': record.check_in_out_type}
         for record in attendance_records
     ]
     return jsonify(attendance_data)
@@ -99,10 +116,18 @@ def attendance():
         file = request.files['image']
         # Nhận diện khuôn mặt trong ảnh
         unknown_image = face_recognition.load_image_file(file)
-        unknown_face_encoding = face_recognition.face_encodings(unknown_image)
+        rgb_image = cv2.cvtColor(unknown_image, cv2.COLOR_BGR2RGB)
+        # Chuyển đổi ảnh thành ảnh xám
+        gray_frame = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2GRAY)
+        # Nhận diện khuôn mặt trong ảnh xám
+        face_locations = face_recognition.face_locations(gray_frame)
+        unknown_face_encoding = face_recognition.face_encodings(rgb_image, face_locations)
         if not unknown_face_encoding:
-            # Nếu không tìm thấy khuôn mặt
-            return jsonify({'message': 'Không phát hiện khuôn mặt.'})
+            # Nếu không tìm thấy khuôn mặt nào thì al trả lười bằng gionhj nói
+            # Đường d đến ghiam.mp3
+            mp3_file = "video/ghiam.mp3"
+            # Trả về bản ghi âm
+            return jsonify(play_mp3(mp3_file))
         # orm user , lấy dữ liệu
         registered_users = Users.query.all()
         # So sánh với danh sách người dùng đã đăng ký
@@ -161,7 +186,6 @@ def attendance():
                         'checkInTime': new_attendance_checkin.checkInTime,
                         'check_in_out_type': new_attendance_checkin.check_in_out_type
                     }})
-
         # Nếu không có sự khớp với người dùng nào
         return jsonify({'message': 'Không có ảnh nào .'})
     except Exception as e:
