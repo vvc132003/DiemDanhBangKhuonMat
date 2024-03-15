@@ -170,7 +170,10 @@ def attendance():
                             attendance_record.check_in_out_type = 'check_out'
                             attendance_record.checkInTime = datetime.now()
                             # Lưu thông tin điểm danh vào CSDL sử dụng ORM
-                            db.session.commit() 
+                            db.session.commit()
+                            # Thông báo  ketthucdiemdanh.mp3
+                            ketthucdiemdanh = "video/ketthucdiemdanh.mp3"
+                            play_mp3(ketthucdiemdanh)
                             return jsonify({'message': 'Check-out thành công.', 'attendance_record': {
                                 'user_id': attendance_record.user_id,
                                 'checkInTime': attendance_record.checkInTime,
@@ -185,6 +188,9 @@ def attendance():
                     # Lưu thông tin điểm danh vào CSDL sử dụng ORM
                     db.session.add(new_attendance_checkin)
                     db.session.commit()
+                    # Thông báo điểm danh thành công diemdanhthanhcong.mp3
+                    diemdanhthanhcong = "video/diemdanhthanhcong.mp3"
+                    play_mp3(diemdanhthanhcong)
                     return jsonify({'message': 'Check-in thành công.', 'attendance_record': {
                         'user_id': new_attendance_checkin.user_id,
                         'checkInTime': new_attendance_checkin.checkInTime,

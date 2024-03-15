@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b733ccef-db23-4c14-b2c0-a2299be8a4a6" name="Changes" comment="">
-      <change afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/video/khuonmatkhongduocdangky.mp3" afterDir="false" />
+      <change afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/video/diemdanhthanhcong.mp3" afterDir="false" />
+      <change afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/video/ketthucdiemdanh.mp3" afterDir="false" />
       <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/.idea/workspace.xml" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app.py" afterDir="false" />
       <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/controllers/user_controller.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/app/controllers/user_controller.py" afterDir="false" />
-      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/play_mp3.py" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/play_mp3.py" afterDir="false" />
-      <change beforePath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/video/ghiam.mp3" beforeDir="false" afterPath="$APPLICATION_HOME_DIR$/jbr/bin/web_flask/video/khongphathienkhuonmatnao.mp3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,16 +33,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/PyCharm Community Edition 2023.2.3/jbr/bin/web_flask&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/PyCharm Community Edition 2023.2.3/jbr/bin/web_flask/video"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\video" />
       <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask" />
       <recent name="D:\PyCharm Community Edition 2023.2.3\jbr\bin\web_flask\templates" />
     </key>
